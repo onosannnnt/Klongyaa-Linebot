@@ -76,7 +76,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token, [TextMessage(text= "ลงทะเบียนไม่สำเร็จ เนื่องจากข้อมูลไม่ถูกต้อง"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")])
 
             print(f"status code: {r.status_code}")
-            if(r.status_code != 200):
+            if(r.status_code != 201):
                 line_bot_api.reply_message(
                     event.reply_token, [TextMessage(text= "ลงทะเบียนไม่สำเร็จ"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")]
                 )
