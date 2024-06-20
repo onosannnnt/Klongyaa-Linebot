@@ -64,7 +64,7 @@ def handle_message(event):
         print(email)
         print(password)
         print(username)
-        line_uid = userId
+        print(userId)
         if email and password and username :
             print(email)
             print(password)
@@ -75,7 +75,7 @@ def handle_message(event):
                 "password": password,
                 "username": username,
                 "confirm_password": password,
-                "line_uid": line_uid
+                "lineUID": userId
             })
 
             print(r.json())
