@@ -51,6 +51,7 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    print(event)
     userId = str(event.source).split('"userId": "')[1].replace('"}', '')
     returnText = f"User id ของคุณ คือ {userId}"
     returnMessage = "ระบบได้รับ user id ของคุณเเล้ว เริ่มต้นการใช้งานสำเร็จ ✔️"
