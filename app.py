@@ -61,6 +61,9 @@ def handle_message(event):
         email = textSpilt[1].replace('email: ', '')
         password = textSpilt[2].replace('password: ', '')
         username = textSpilt[3].replace('username: ', '')
+        print(email)
+        print(password)
+        print(username)
         line_uid = userId
         if email and password and username :
             print(email)
