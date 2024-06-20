@@ -62,14 +62,7 @@ def handle_message(event):
         email = textSpilt[1].replace('email: ', '')
         password = textSpilt[2].replace('password: ', '')
         username = textSpilt[3].replace('username: ', '')
-        print(email)
-        print(password)
-        print(username)
-        print(userId)
         if email and password and username :
-            print(email)
-            print(password)
-            print(username)
             API_ENDPOINT = os.environ.get("API_ENDPOINT")
             try:
                 r = requests.post(API_ENDPOINT, json={
@@ -82,8 +75,12 @@ def handle_message(event):
             except requests.exceptions.RequestException as e:
                 line_bot_api.reply_message(event.reply_token, [TextMessage(text= "ลงทะเบียนไม่สำเร็จ เนื่องจากข้อมูลไม่ถูกต้อง"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")])
 
-            print(r.json())
-
+            print(f"status code: {r.status_code}")
+            if(r.status_code != 200):
+                line_bot_api.reply_message(
+                    event.reply_token, [TextMessage(text= "ลงทะเบียนไม่สำเร็จ"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")]
+                )
+                return
             line_bot_api.reply_message(
                 event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnMessage), TextMessage(text= returnText), TextMessage(text= finalMessage)]
                 # event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= f"User id ของคุณ คือ {userId}")]
