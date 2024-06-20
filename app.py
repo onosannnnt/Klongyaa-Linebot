@@ -62,9 +62,9 @@ def handle_message(event):
         email = textSpilt[1].replace('email: ', '')
         password = textSpilt[2].replace('password: ', '')
         username = textSpilt[3].replace('username: ', '')
-        email.replace(' ', '')
-        password.replace(' ', '')
-        username.replace(' ', '')
+        email = email.replace(' ', '')
+        password = password.replace(' ', '')
+        username = username.replace(' ', '')
         if email and password and username :
             API_ENDPOINT = os.environ.get("API_ENDPOINT")
             try:
