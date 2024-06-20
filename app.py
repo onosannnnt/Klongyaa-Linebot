@@ -70,13 +70,16 @@ def handle_message(event):
             print(password)
             print(username)
             API_ENDPOINT = os.environ.get("API_ENDPOINT")
-            r = requests.post(API_ENDPOINT, json={
-                "email": email,
-                "password": password,
-                "username": username,
-                "confirmPassword": password,
-                "lineUID": userId
-            })
+            try:
+                r = requests.post(API_ENDPOINT, json={
+                    "email": email,
+                    "password": password,
+                    "username": username,
+                    "confirmPassword": password,
+                    "lineUID": userId
+                })
+            except requests.exceptions.RequestException as e:
+                line_bot_api.reply_message(event.reply_token, [TextMessage(text= "ลงทะเบียนไม่สำเร็จ เนื่องจากข้อมูลไม่ถูกต้อง"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")])
 
             print(r.json())
 
