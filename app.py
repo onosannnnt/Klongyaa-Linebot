@@ -74,7 +74,7 @@ def handle_message(event):
                 "email": email,
                 "password": password,
                 "username": username,
-                "confirm_password": password,
+                "confirmPassword": password,
                 "lineUID": userId
             })
 
