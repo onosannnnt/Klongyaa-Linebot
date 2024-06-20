@@ -55,6 +55,7 @@ def handle_message(event):
     userId = str(event.source).split('"userId": "')[1].replace('"}', '')
     returnText = f"User id ของคุณ คือ {userId}"
     returnMessage = "ระบบได้รับ user id ของคุณเเล้ว เริ่มต้นการใช้งานสำเร็จ ✔️"
+    finalMessage = "กรุณานำ User ID ไปใส่ช่อง userID ในกล่องยา"
     text = event.message.text
     textSpilt = text.split('/n')[0].split('\n')
     if text.startswith("ลงทะเบียน") :
@@ -84,7 +85,7 @@ def handle_message(event):
             print(r.json())
 
             line_bot_api.reply_message(
-                event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnText), TextMessage(text= returnMessage)]
+                event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnMessage), TextMessage(text= returnText), TextMessage(text= finalMessage)]
                 # event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= f"User id ของคุณ คือ {userId}")]
             )
         else:
