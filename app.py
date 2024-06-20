@@ -59,9 +59,9 @@ def handle_message(event):
     text = event.message.text
     textSpilt = text.split('/n')[0].split('\n')
     if text.startswith("ลงทะเบียน") :
-        email = textSpilt[1].replace('email: ', '')
-        password = textSpilt[2].replace('password: ', '')
-        username = textSpilt[3].replace('username: ', '')
+        email = textSpilt[1].replace('email:', '')
+        password = textSpilt[2].replace('password:', '')
+        username = textSpilt[3].replace('username:', '')
         email = email.replace(' ', '')
         password = password.replace(' ', '')
         username = username.replace(' ', '')
