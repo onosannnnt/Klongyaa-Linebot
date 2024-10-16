@@ -77,7 +77,7 @@ def handle_message(event):
                     "username": username,
                     "role": "user",
                     "numberOfPillChannels": numberOfPillChannels,
-                    "lineUID": userId
+                    "lineID": userId
                 })
             except requests.exceptions.RequestException as e:
                 line_bot_api.reply_message(event.reply_token, [TextMessage(text= "1"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")])
