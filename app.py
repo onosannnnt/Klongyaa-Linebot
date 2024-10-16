@@ -80,13 +80,13 @@ def handle_message(event):
                     "lineUID": userId
                 })
             except requests.exceptions.RequestException as e:
-                line_bot_api.reply_message(event.reply_token, [TextMessage(text= "ลงทะเบียนไม่สำเร็จ"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")])
+                line_bot_api.reply_message(event.reply_token, [TextMessage(text= "1"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")])
                 print(e)
 
             print(f"status code: {r.status_code}")
             if(r.status_code != 201):
                 line_bot_api.reply_message(
-                    event.reply_token, [TextMessage(text= "ลงทะเบียนไม่สำเร็จ"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")]
+                    event.reply_token, [TextMessage(text= "2"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")]
                 )
                 return
             line_bot_api.reply_message(
@@ -95,7 +95,7 @@ def handle_message(event):
             )
         else:
             line_bot_api.reply_message(
-                event.reply_token, [TextMessage(text= "ลงทะเบียนไม่สำเร็จ"), TextMessage(text= f"เนื่องจากข้อมูลไม่ครบถ้วน")]
+                event.reply_token, [TextMessage(text= "3"), TextMessage(text= f"เนื่องจากข้อมูลไม่ครบถ้วน")]
             )
     # if event.message.text == 'Uid' or event.message.text == 'uid':
     #     line_bot_api.reply_message(
