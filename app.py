@@ -85,8 +85,9 @@ def handle_message(event):
 
             print(f"status code: {r.status_code}")
             if(r.status_code != 201):
+                print(r.json())
                 line_bot_api.reply_message(
-                    event.reply_token, [TextMessage(text= {r}), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")]
+                    event.reply_token, [TextMessage(text= "2"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")]
                 )
                 return
             line_bot_api.reply_message(
