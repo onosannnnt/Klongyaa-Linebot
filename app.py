@@ -58,6 +58,7 @@ def handle_message(event):
     finalMessage = "กรุณานำ User ID ไปใส่ช่อง userID ในกล่องยา"
     text = event.message.text
     textSpilt = text.split('/n')[0].split('\n')
+    print(textSpilt)
     if text.startswith("ลงทะเบียน") :
         email = textSpilt[1].replace('email:', '')
         password = textSpilt[2].replace('password:', '')
