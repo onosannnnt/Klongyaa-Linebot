@@ -68,6 +68,10 @@ def handle_message(event):
         password = password.replace(' ', '')
         username = username.replace(' ', '')
         numberOfPillChannels = numberOfPillChannels.replace(' ', '')
+        print(email)
+        print(password)
+        print(username)
+        print(numberOfPillChannels)
         if email and password and username :
             API_ENDPOINT = os.getenv("API_ENDPOINT")
             try:
