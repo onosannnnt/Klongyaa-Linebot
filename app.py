@@ -69,7 +69,7 @@ def handle_message(event):
         username = username.replace(' ', '')
         numberOfPillChannels = numberOfPillChannels.replace(' ', '')
         if email and password and username :
-            API_ENDPOINT = os.getenv("API_ENDPOINT")
+            API_ENDPOINT = "https://pillbox-backend.ialwh0.easypanel.host/user/register"
             try:
                 r = requests.post(API_ENDPOINT, json={
                     "email": email,
@@ -86,7 +86,7 @@ def handle_message(event):
             print(f"status code: {r.status_code}")
             if(r.status_code != 201):
                 line_bot_api.reply_message(
-                    event.reply_token, [TextMessage(text= "2"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")]
+                    event.reply_token, [TextMessage(text= {r}), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")]
                 )
                 return
             line_bot_api.reply_message(
