@@ -68,7 +68,6 @@ def handle_message(event):
         password = password.replace(' ', '')
         username = username.replace(' ', '')
         numberOfPillChannels = numberOfPillChannels.replace(' ', '')
-        print(username)
         if email and password and username :
             API_ENDPOINT = "https://pillbox-backend.ialwh0.easypanel.host/user/register"
             try:
@@ -81,14 +80,14 @@ def handle_message(event):
                     "lineID": userId
                 })
             except requests.exceptions.RequestException as e:
-                line_bot_api.reply_message(event.reply_token, [TextMessage(text= "1"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")])
+                line_bot_api.reply_message(event.reply_token, [TextMessage(text= "ระบบขัดข้อง"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")])
                 print(e)
 
             print(f"status code: {r.status_code}")
             if(r.status_code != 201):
                 print(r.json())
                 line_bot_api.reply_message(
-                    event.reply_token, [TextMessage(text= "2"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")]
+                    event.reply_token, [TextMessage(text= "ระบบขัดข้อง"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")]
                 )
                 return
             line_bot_api.reply_message(
@@ -97,7 +96,7 @@ def handle_message(event):
             )
         else:
             line_bot_api.reply_message(
-                event.reply_token, [TextMessage(text= "3"), TextMessage(text= f"เนื่องจากข้อมูลไม่ครบถ้วน")]
+                event.reply_token, [TextMessage(text= "ลงทะเบียนไม่สำเร็จ"), TextMessage(text= f"เนื่องจากข้อมูลไม่ครบถ้วน")]
             )
     # if event.message.text == 'Uid' or event.message.text == 'uid':
     #     line_bot_api.reply_message(
