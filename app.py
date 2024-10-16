@@ -68,10 +68,6 @@ def handle_message(event):
         password = password.replace(' ', '')
         username = username.replace(' ', '')
         numberOfPillChannels = numberOfPillChannels.replace(' ', '')
-        print(email)
-        print(password)
-        print(username)
-        print(numberOfPillChannels)
         if email and password and username :
             API_ENDPOINT = os.getenv("API_ENDPOINT")
             try:
@@ -85,6 +81,7 @@ def handle_message(event):
                 })
             except requests.exceptions.RequestException as e:
                 line_bot_api.reply_message(event.reply_token, [TextMessage(text= "ลงทะเบียนไม่สำเร็จ"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")])
+                print(e)
 
             print(f"status code: {r.status_code}")
             if(r.status_code != 201):
