@@ -19,8 +19,8 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-at = os.getenv("ACCESS_TOKEN")
-sk = os.getenv("SECRET_KEY")
+at = os.getenv("CHANNEL_ACCESS_TOKEN")
+sk = os.getenv("CHANNEL_SECRET")
 
 line_bot_api = LineBotApi(at)
 handler = WebhookHandler(sk)
