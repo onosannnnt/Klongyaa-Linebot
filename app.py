@@ -62,17 +62,20 @@ def handle_message(event):
         email = textSpilt[1].replace('email:', '')
         password = textSpilt[2].replace('password:', '')
         username = textSpilt[3].replace('username:', '')
+        numberOfPillChannels = textSpilt[4].replace('numberOfPillChannels:', '')
         email = email.replace(' ', '')
         password = password.replace(' ', '')
         username = username.replace(' ', '')
+        numberOfPillChannels = numberOfPillChannels.replace(' ', '')
         if email and password and username :
-            API_ENDPOINT = os.environ.get("API_ENDPOINT")
+            API_ENDPOINT = os.getenv("API_ENDPOINT")
             try:
                 r = requests.post(API_ENDPOINT, json={
                     "email": email,
                     "password": password,
                     "username": username,
-                    "confirmPassword": password,
+                    "role": "user",
+                    "numberOfPillChannels": numberOfPillChannels,
                     "lineUID": userId
                 })
             except requests.exceptions.RequestException as e:
