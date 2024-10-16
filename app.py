@@ -68,6 +68,7 @@ def handle_message(event):
         password = password.replace(' ', '')
         username = username.replace(' ', '')
         numberOfPillChannels = numberOfPillChannels.replace(' ', '')
+        print(username)
         if email and password and username :
             API_ENDPOINT = "https://pillbox-backend.ialwh0.easypanel.host/user/register"
             try:
