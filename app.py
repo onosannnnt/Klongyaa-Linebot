@@ -71,7 +71,7 @@ def handle_message(event):
                 userData = requests.get(API_ENDPOINT + f"/pillboxLogin/{email}")
                 print(userData)
                 returnText = "กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"
-                finalText = (f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n ID ของคุณคือ {userData['id']}")
+                # finalText = (f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n ID ของคุณคือ {userData['id']}")
                 r = requests.post(API_ENDPOINT + "/register", json={
                     "email": email,
                     "password": password,
@@ -92,8 +92,8 @@ def handle_message(event):
                 )
                 return
             line_bot_api.reply_message(
-                event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnText), TextMessage(text= finalText)]
-                # event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= f"User id ของคุณ คือ {userId}")]
+                event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnText)]
+                # event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnText), TextMessage(text= finalText)]
             )
         else:
             line_bot_api.reply_message(
