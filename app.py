@@ -53,9 +53,6 @@ def callback():
 def handle_message(event):
     print(event)
     userId = str(event.source).split('"userId": "')[1].replace('"}', '')
-    returnText = f"User id ของคุณ คือ {userId}"
-    returnMessage = "กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"
-    finalMessage = f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n id ของคุณคือ {userData['id']}"
     text = event.message.text
     textSpilt = text.split('/n')[0].split('\n')
     print(textSpilt)
@@ -68,6 +65,9 @@ def handle_message(event):
         password = password.replace(' ', '')
         username = username.replace(' ', '')
         numberOfPillChannels = numberOfPillChannels.replace(' ', '')
+        userData = {}
+        returnMessage = "กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"
+        finalMessage = f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n id ของคุณคือ {userData['id']}"
         if email and password and username :
             API_ENDPOINT = "https://pillbox-backend.ialwh0.easypanel.host/user/register"
             try:
@@ -80,6 +80,7 @@ def handle_message(event):
                     "lineID": userId
                 })
                 userData = requests.get(f"https://pillbox-backend.ialwh0.easypanel.host/user/pillboxlogin/{username}")
+
                 print(userData['id'])
             except requests.exceptions.RequestException as e:
                 line_bot_api.reply_message(event.reply_token, [TextMessage(text= "ระบบขัดข้อง"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")])
@@ -93,7 +94,7 @@ def handle_message(event):
                 )
                 return
             line_bot_api.reply_message(
-                event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnMessage), TextMessage(text= returnText), TextMessage(text= finalMessage)]
+                event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnMessage), TextMessage(text= finalMessage)]
                 # event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= f"User id ของคุณ คือ {userId}")]
             )
         else:
