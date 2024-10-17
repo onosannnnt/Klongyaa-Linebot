@@ -54,8 +54,8 @@ def handle_message(event):
     print(event)
     userId = str(event.source).split('"userId": "')[1].replace('"}', '')
     returnText = f"User id ของคุณ คือ {userId}"
-    returnMessage = "ระบบได้รับ user id ของคุณเเล้ว เริ่มต้นการใช้งานสำเร็จ ✔️"
-    finalMessage = "กรุณานำ User ID ไปใส่ช่อง userID ในกล่องยา"
+    returnMessage = "กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"
+    finalMessage = f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n id ของคุณคือ {userData['id']}"
     text = event.message.text
     textSpilt = text.split('/n')[0].split('\n')
     print(textSpilt)
@@ -80,7 +80,7 @@ def handle_message(event):
                     "lineID": userId
                 })
                 userData = requests.get(f"https://pillbox-backend.ialwh0.easypanel.host/user/pillboxlogin/{username}")
-                print("userData", userData.json())
+                print(userData['id'])
             except requests.exceptions.RequestException as e:
                 line_bot_api.reply_message(event.reply_token, [TextMessage(text= "ระบบขัดข้อง"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")])
                 print(e)
