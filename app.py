@@ -57,9 +57,9 @@ def handle_message(event):
     text = event.message.text
     textSpilt = text.split('/n')[0].split('\n')
     returnText = [
-                    f"กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"
-                    f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n id ของคุณคือ
-                    {userData['id']}"
+                    (f"กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"),
+                    (f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n id ของคุณคือ
+                    {userData['id']}")
                     
     ]
     print(textSpilt)
