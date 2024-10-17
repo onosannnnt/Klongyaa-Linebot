@@ -67,7 +67,7 @@ def handle_message(event):
         numberOfPillChannels = numberOfPillChannels.replace(' ', '')
         userData = {}
         returnMessage = "กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"
-        finalMessage = f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n id ของคุณคือ {userData['id']}"
+        finalMessage = f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n id ของคุณคือ {userData.get('id')}"
         if email and password and username :
             API_ENDPOINT = "https://pillbox-backend.ialwh0.easypanel.host/user/register"
             try:
