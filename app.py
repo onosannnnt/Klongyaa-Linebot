@@ -21,6 +21,7 @@ from dotenv import load_dotenv
 load_dotenv()
 at = os.getenv("CHANNEL_ACCESS_TOKEN")
 sk = os.getenv("CHANNEL_SECRET")
+API_ENDPOINT = os.getenv("API_ENDPOINT")
 
 line_bot_api = LineBotApi(at)
 handler = WebhookHandler(sk)
@@ -53,25 +54,28 @@ def callback():
 def handle_message(event):
     print(event)
     userId = str(event.source).split('"userId": "')[1].replace('"}', '')
-    returnText = f"User id ของคุณ คือ {userId}"
-    returnMessage = "ระบบได้รับ user id ของคุณเเล้ว เริ่มต้นการใช้งานสำเร็จ ✔️"
-    finalMessage = "กรุณานำ User ID ไปใส่ช่อง userID ในกล่องยา"
     text = event.message.text
     textSpilt = text.split('/n')[0].split('\n')
+    returnText = [
+                    f"กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"
+                    f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n id ของคุณคือ
+                    {userData['id']}"
+                    
+    ]
     print(textSpilt)
     if text.startswith("ลงทะเบียน") :
-        email = textSpilt[1].replace('email:', '')
-        password = textSpilt[2].replace('password:', '')
-        username = textSpilt[3].replace('username:', '')
-        numberOfPillChannels = textSpilt[4].replace('numberOfPillChannels:', '')
+        username = textSpilt[1].replace('ชื่อผู้ใช้งาน:', '')
+        email = textSpilt[2].replace('อีเมลล์:', '')
+        password = textSpilt[3].replace('รหัสผ่าน:', '')
+        numberOfPillChannels = textSpilt[4].replace('จำนวนช่องในกล่องยา:', '')
         email = email.replace(' ', '')
         password = password.replace(' ', '')
         username = username.replace(' ', '')
         numberOfPillChannels = numberOfPillChannels.replace(' ', '')
         if email and password and username :
-            API_ENDPOINT = "https://pillbox-backend.ialwh0.easypanel.host/user/register"
             try:
-                r = requests.post(API_ENDPOINT, json={
+                userData = request.get(API_ENDPOINT + f"/pillboxLogin/{email}")
+                r = requests.post(API_ENDPOINT + "/register", json={
                     "email": email,
                     "password": password,
                     "username": username,
@@ -91,7 +95,7 @@ def handle_message(event):
                 )
                 return
             line_bot_api.reply_message(
-                event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnMessage), TextMessage(text= returnText), TextMessage(text= finalMessage)]
+                event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnText[0]), TextMessage(text= returnText[1])]
                 # event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= f"User id ของคุณ คือ {userId}")]
             )
         else:
