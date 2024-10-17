@@ -56,7 +56,6 @@ def handle_message(event):
     userId = str(event.source).split('"userId": "')[1].replace('"}', '')
     text = event.message.text
     textSpilt = text.split('/n')[0].split('\n')
-    print(textSpilt)
     if text.startswith("ลงทะเบียน") :
         username = textSpilt[1].replace('ชื่อผู้ใช้:', '')
         email = textSpilt[2].replace('อีเมลล์:', '')
@@ -66,7 +65,6 @@ def handle_message(event):
         password = password.replace(' ', '')
         username = username.replace(' ', '')
         numberOfPillChannels = numberOfPillChannels.replace(' ', '')
-        print(API_ENDPOINT)
         if email and password and username :
             try:
                 userData = requests.get(f"{API_ENDPOINT}/user/pillboxlogin/{userId}").json()
@@ -85,12 +83,12 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token, [TextMessage(text= "ระบบขัดข้อง"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")])
                 print(e)
                 # print(f"status code: {r.status_code}")
-            if(r.status_code != 201):
-                print(r.json())
-                line_bot_api.reply_message(
-                    event.reply_token, [TextMessage(text= "ระบบขัดข้อง"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")]
-                )
-                return
+            # if(r.status_code != 201):
+            #     print(r.json())
+            #     line_bot_api.reply_message(
+            #         event.reply_token, [TextMessage(text= "ระบบขัดข้อง"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")]
+            #     )
+            #     return
             line_bot_api.reply_message(
                 event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnText)]
                 # event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnText), TextMessage(text= finalText)]
