@@ -66,8 +66,8 @@ def handle_message(event):
         username = username.replace(' ', '')
         numberOfPillChannels = numberOfPillChannels.replace(' ', '')
         userData = {}
-        returnMessage = "กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"
-        finalMessage = f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n id ของคุณคือ {userData['id']}"
+        returnMessage = ""
+        finalMessage = ""
         if email and password and username :
             API_ENDPOINT = "https://pillbox-backend.ialwh0.easypanel.host/user/register"
             try:
@@ -80,6 +80,8 @@ def handle_message(event):
                     "lineID": userId
                 })
                 userData = requests.get(f"https://pillbox-backend.ialwh0.easypanel.host/user/pillboxlogin/{username}").json()
+                returnMessage = "กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"
+                finalMessage = f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n id ของคุณคือ {userData['id']}"
             except requests.exceptions.RequestException as e:
                 line_bot_api.reply_message(event.reply_token, [TextMessage(text= "ระบบขัดข้อง"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")])
                 print(e)
