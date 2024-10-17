@@ -56,13 +56,9 @@ def handle_message(event):
     userId = str(event.source).split('"userId": "')[1].replace('"}', '')
     text = event.message.text
     textSpilt = text.split('/n')[0].split('\n')
-    returnText = "กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"
-    finalText = (f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n ID ของคุณคือ {userData['id']}")
-                    
-
     print(textSpilt)
     if text.startswith("ลงทะเบียน") :
-        username = textSpilt[1].replace('ชื่อผู้ใช้งาน:', '')
+        username = textSpilt[1].replace('ชื่อผู้ใช้:', '')
         email = textSpilt[2].replace('อีเมลล์:', '')
         password = textSpilt[3].replace('รหัสผ่าน:', '')
         numberOfPillChannels = textSpilt[4].replace('จำนวนช่องในกล่องยา:', '')
@@ -73,6 +69,9 @@ def handle_message(event):
         if email and password and username :
             try:
                 userData = request.get(API_ENDPOINT + f"/pillboxLogin/{email}")
+                print(userData)
+                returnText = "กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"
+                finalText = (f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n ID ของคุณคือ {userData['id']}")
                 r = requests.post(API_ENDPOINT + "/register", json={
                     "email": email,
                     "password": password,
