@@ -56,12 +56,10 @@ def handle_message(event):
     userId = str(event.source).split('"userId": "')[1].replace('"}', '')
     text = event.message.text
     textSpilt = text.split('/n')[0].split('\n')
-    returnText = [
-                    (f"กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"),
-                    (f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n id ของคุณคือ
-                    {userData['id']}")
+    returnText = "กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"
+    finalText = (f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n ID ของคุณคือ {userData['id']}")
                     
-    ]
+
     print(textSpilt)
     if text.startswith("ลงทะเบียน") :
         username = textSpilt[1].replace('ชื่อผู้ใช้งาน:', '')
@@ -95,7 +93,7 @@ def handle_message(event):
                 )
                 return
             line_bot_api.reply_message(
-                event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnText[0]), TextMessage(text= returnText[1])]
+                event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnText), TextMessage(text= finalText)]
                 # event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= f"User id ของคุณ คือ {userId}")]
             )
         else:
