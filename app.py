@@ -84,8 +84,7 @@ def handle_message(event):
             except requests.exceptions.RequestException as e:
                 line_bot_api.reply_message(event.reply_token, [TextMessage(text= "ระบบขัดข้อง"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")])
                 print(e)
-
-            print(f"status code: {r.status_code}")
+                print(f"status code: {r.status_code}")
             if(r.status_code != 201):
                 print(r.json())
                 line_bot_api.reply_message(
