@@ -21,7 +21,6 @@ from dotenv import load_dotenv
 load_dotenv()
 at = os.getenv("CHANNEL_ACCESS_TOKEN")
 sk = os.getenv("CHANNEL_SECRET")
-API_ENDPOINT = os.getenv("API_ENDPOINT")
 
 line_bot_api = LineBotApi(at)
 handler = WebhookHandler(sk)
@@ -54,8 +53,12 @@ def callback():
 def handle_message(event):
     print(event)
     userId = str(event.source).split('"userId": "')[1].replace('"}', '')
+    returnText = f"User id ของคุณ คือ {userId}"
+    returnMessage = "ระบบได้รับ user id ของคุณเเล้ว เริ่มต้นการใช้งานสำเร็จ ✔️"
+    finalMessage = "กรุณานำ User ID ไปใส่ช่อง userID ในกล่องยา"
     text = event.message.text
     textSpilt = text.split('/n')[0].split('\n')
+    print(textSpilt)
     if text.startswith("ลงทะเบียน") :
         username = textSpilt[1].replace('ชื่อผู้ใช้:', '')
         email = textSpilt[2].replace('อีเมลล์:', '')
@@ -66,12 +69,9 @@ def handle_message(event):
         username = username.replace(' ', '')
         numberOfPillChannels = numberOfPillChannels.replace(' ', '')
         if email and password and username :
+            API_ENDPOINT = "https://pillbox-backend.ialwh0.easypanel.host/user/register"
             try:
-                userData = requests.get(f"{API_ENDPOINT}/user/pillboxlogin/{userId}").json()
-                print(userData)
-                returnText = "กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"
-                # finalText = (f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n ID ของคุณคือ {userData['id']}")
-                r = requests.post(f"{API_ENDPOINT}", json={
+                r = requests.post(API_ENDPOINT, json={
                     "email": email,
                     "password": password,
                     "username": username,
@@ -79,19 +79,22 @@ def handle_message(event):
                     "numberOfPillChannels": numberOfPillChannels,
                     "lineID": userId
                 })
+                userData = requests.get(f"https://pillbox-backend.ialwh0.easypanel.host/user/pillboxlogin/{username}")
+                print("userData", userData.json())
             except requests.exceptions.RequestException as e:
                 line_bot_api.reply_message(event.reply_token, [TextMessage(text= "ระบบขัดข้อง"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")])
                 print(e)
-                # print(f"status code: {r.status_code}")
-            # if(r.status_code != 201):
-            #     print(r.json())
-            #     line_bot_api.reply_message(
-            #         event.reply_token, [TextMessage(text= "ระบบขัดข้อง"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")]
-            #     )
-            #     return
+
+            print(f"status code: {r.status_code}")
+            if(r.status_code != 201):
+                print(r.json())
+                line_bot_api.reply_message(
+                    event.reply_token, [TextMessage(text= "ระบบขัดข้อง"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")]
+                )
+                return
             line_bot_api.reply_message(
-                event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnText)]
-                # event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnText), TextMessage(text= finalText)]
+                event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= returnMessage), TextMessage(text= returnText), TextMessage(text= finalMessage)]
+                # event.reply_token, [TextMessage(text= "ลงทะเบียนสำเร็จ"), TextMessage(text= f"User id ของคุณ คือ {userId}")]
             )
         else:
             line_bot_api.reply_message(
