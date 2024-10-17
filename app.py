@@ -68,7 +68,7 @@ def handle_message(event):
         numberOfPillChannels = numberOfPillChannels.replace(' ', '')
         if email and password and username :
             try:
-                userData = request.get(API_ENDPOINT + f"/pillboxLogin/{email}")
+                userData = requests.get(API_ENDPOINT + f"/pillboxLogin/{email}")
                 print(userData)
                 returnText = "กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"
                 finalText = (f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n ID ของคุณคือ {userData['id']}")
