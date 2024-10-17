@@ -82,6 +82,7 @@ def handle_message(event):
                 })
                 userData = requests.get(f"https://pillbox-backend.ialwh0.easypanel.host/user/pillboxlogin/{username}")
                 print("Type : ",type(userData.json()))
+                print(userData.json()['id'])
             except requests.exceptions.RequestException as e:
                 line_bot_api.reply_message(event.reply_token, [TextMessage(text= "ระบบขัดข้อง"), TextMessage(text= f"กรุณาลองใหม่อีกครั้ง")])
                 print(e)
