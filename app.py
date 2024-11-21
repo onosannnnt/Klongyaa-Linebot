@@ -82,6 +82,7 @@ def handle_message(event):
                 })
                 userData = requests.get(
                     f"https://pillbox-backend.ialwh0.easypanel.host/user/pillboxlogin/{username}").json()
+                print(userData)
                 returnMessage = "กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"
                 finalMessage = f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n Email ของคุณคือ {
                     userData['email']}"
