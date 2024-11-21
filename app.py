@@ -73,12 +73,12 @@ def handle_message(event):
             API_ENDPOINT = "https://pillbox-backend.ialwh0.easypanel.host/user/register"
             try:
                 r = requests.post(API_ENDPOINT, json={
-                    "email": email,
-                    "password": password,
-                    "username": username,
+                    "email": str(email),
+                    "password": str(password),
+                    "username": str(username),
                     "role": "user",
-                    "numberOfPillChannels": numberOfPillChannels,
-                    "lineID": userId
+                    "numberOfPillChannels": str(numberOfPillChannels),
+                    "lineID": str(userId)
                 })
                 userData = requests.get(
                     f"https://pillbox-backend.ialwh0.easypanel.host/user/pillboxlogin/{username}").json()
