@@ -73,17 +73,18 @@ def handle_message(event):
             API_ENDPOINT = "https://pillbox-backend.ialwh0.easypanel.host/user/register"
             try:
                 r = requests.post(API_ENDPOINT, json={
-                    "email": str(email),
-                    "password": str(password),
-                    "username": str(username),
+                    "email": email,
+                    "password": password,
+                    "username": username,
                     "role": "user",
-                    "numberOfPillChannels": str(numberOfPillChannels),
-                    "lineID": str(userId)
+                    "numberOfPillChannels": numberOfPillChannels,
+                    "lineID": userId
                 })
                 userData = requests.get(
                     f"https://pillbox-backend.ialwh0.easypanel.host/user/pillboxlogin/{username}").json()
                 returnMessage = "กรุณานำชื่อผู้ใช้ไปใส่ในกล่องยา"
-                finalMessage = f"กรุณาตรวจสอบ id ของคุณที่กล่องยา"
+                finalMessage = f"กรุณาตรวจสอบ id ของคุณที่กล่องยา \n Email ของคุณคือ {
+                    userData['email']}"
             except requests.exceptions.RequestException as e:
                 line_bot_api.reply_message(event.reply_token, [TextMessage(
                     text="ระบบขัดข้อง"), TextMessage(text=f"กรุณาลองใหม่อีกครั้ง")])
